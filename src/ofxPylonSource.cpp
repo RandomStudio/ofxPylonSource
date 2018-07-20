@@ -1,4 +1,5 @@
 #include "ofxPylonSource.h"
+#include "ofMain.h"
 
 PylonSource::PylonSource() {
 	running = false;
@@ -7,8 +8,6 @@ PylonSource::PylonSource() {
 
 PylonSource::~PylonSource() {
 	if (camera && running) {
-		cout << "*** PylonSource destructor" << endl;
-		//camera->DeregisterConfiguration(this);
 		camera->DeregisterImageEventHandler(this);
 		free(frameData);
 		delete camera;
@@ -23,13 +22,11 @@ void PylonSource::start(int camWidth, int camHeight, int camChannels, const char
 	bufferSize = camWidth * camHeight * camChannels;
 	bool success = initializeCamera();
 
-	//if (success) success = registerEvents();
 	if (success) {
 		camera->RegisterImageEventHandler(this, RegistrationMode_ReplaceAll, Cleanup_None);
 		camera->Open();
-		cout << "Will load camera settings from node file " << nodeFile << "..." << endl;
+		ofLogNotice("Will load camera settings from node file", ofToString(nodeFile));
 		CFeaturePersistence::Load(nodeFile, &camera->GetNodeMap(), true);
-		//startGrabbing();
 		camera->StartGrabbing(GrabStrategy_LatestImageOnly, GrabLoop_ProvidedByInstantCamera);
 		running = true;
 	}
