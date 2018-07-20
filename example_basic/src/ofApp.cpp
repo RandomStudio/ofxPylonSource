@@ -6,14 +6,12 @@ void ofApp::setup(){
 
     ofSetLogLevel(OF_LOG_VERBOSE);
 
-    camWidth = 1920;
-    camHeight = 1200;
+    camWidth = 1024;
+    camHeight = 1024;
     numChannels = 3;
-
 
     try {
 		mPylonSource = PylonSource::create();
-		// mPylonSource->start(camWidth, camHeight, numChannels, ofFilePath::getAbsolutePath("acA1920-40um.pfs").c_str());
 		mPylonSource->start(camWidth, camHeight, numChannels);
 	}
 	catch (GenericException &exc) {
