@@ -1,4 +1,4 @@
-#include "PylonSource.h"
+#include "ofxPylonSource.h"
 
 PylonSource::PylonSource() {
 	running = false;

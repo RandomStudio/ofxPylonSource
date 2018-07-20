@@ -70,6 +70,12 @@ linux64:
 	# ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_legacy.a
 	# ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_calib3d.a
 	# ...
+PYLON_ROOT ?= /opt/pylon5
+PROJECT_LDFLAGS    := $(shell $(PYLON_ROOT)/bin/pylon-config --libs-rpath)
+PROJECT_LDLIBS     := $(shell $(PYLON_ROOT)/bin/pylon-config --libs)
+PROJECT_CFLAGS   := $(shell $(PYLON_ROOT)/bin/pylon-config --cflags)
+USER_LDFLAGS=-L/opt/pylon5/lib64 -Wl,-E -lpylonbase -lpylonutility -lGenApi_gcc_v3_0_Basler_pylon_v5_0 -lGCBase_gcc_v3_0_Basler_pylon_v5_0
+
 linux:
 win_cb:
 linuxarmv6l:
