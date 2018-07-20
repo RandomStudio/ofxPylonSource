@@ -6,7 +6,7 @@ void ofApp::setup(){
 
     camWidth = 1920;
     camHeight = 1200;
-    numChannels = 1;
+    numChannels = 3;
 
 
     try {
@@ -17,7 +17,7 @@ void ofApp::setup(){
 		ofLogFatalError("Failed to init capture");
 	}
 
-    camImage.allocate(camWidth, camHeight, OF_IMAGE_GRAYSCALE);
+    camImage.allocate(camWidth, camHeight, OF_IMAGE_COLOR);
 }
 
 //--------------------------------------------------------------
@@ -25,7 +25,7 @@ void ofApp::update(){
 
     if (mPylonSource && mPylonSource->isRunning()) {
 		void * data = mPylonSource->getFrameData();
-        camImage.setFromPixels((const unsigned char*)data, camWidth, camHeight, OF_IMAGE_GRAYSCALE);
+        camImage.setFromPixels((const unsigned char*)data, camWidth, camHeight, OF_IMAGE_COLOR);
         camImage.update();
 	}
 }
