@@ -22,5 +22,8 @@ class ofApp: public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 	private:
+		int camWidth, camHeight, numChannels;
+
 		PylonSourceRef mPylonSource;
+		ofImage camImage;
 };
