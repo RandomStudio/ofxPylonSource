@@ -13,7 +13,8 @@ void ofApp::setup(){
 
     try {
 		mPylonSource = PylonSource::create();
-		mPylonSource->start(camWidth, camHeight, numChannels, ofFilePath::getAbsolutePath("acA1920-40um.pfs").c_str());
+		// mPylonSource->start(camWidth, camHeight, numChannels, ofFilePath::getAbsolutePath("acA1920-40um.pfs").c_str());
+		mPylonSource->start(camWidth, camHeight, numChannels);
 	}
 	catch (GenericException &exc) {
 		ofLogFatalError("Failed to init capture");

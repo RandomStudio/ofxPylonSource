@@ -14,7 +14,7 @@ PylonSource::~PylonSource() {
 	}
 }
 
-void PylonSource::start(int camWidth, int camHeight, int camChannels, const char* nodeFile) {
+void PylonSource::start(int camWidth, int camHeight, int camChannels, const char* featureFilePath) {
 	width = camWidth;
 	height = camHeight;
 	channels = camChannels;
@@ -25,8 +25,10 @@ void PylonSource::start(int camWidth, int camHeight, int camChannels, const char
 	if (success) {
 		camera->RegisterImageEventHandler(this, RegistrationMode_ReplaceAll, Cleanup_None);
 		camera->Open();
-		ofLogVerbose("Will load camera settings from node file", ofToString(nodeFile));
-		CFeaturePersistence::Load(nodeFile, &camera->GetNodeMap(), true);
+		if (featureFilePath != "") {
+			ofLogNotice("applying camera settings from features file", featureFilePath);
+			CFeaturePersistence::Load(featureFilePath, &camera->GetNodeMap(), true);
+		}
 		camera->StartGrabbing(GrabStrategy_LatestImageOnly, GrabLoop_ProvidedByInstantCamera);
 		running = true;
 	}

@@ -24,7 +24,7 @@ public:
 	PylonSource();
 	~PylonSource();
 
-	void start(int camWidth, int camHeight, int camChannels, const char* nodeFile);
+	void start(int camWidth, int camHeight, int camChannels, const char* nodeFile = "");
 
 	bool hasNewFrame() {
 		return newFrame;
