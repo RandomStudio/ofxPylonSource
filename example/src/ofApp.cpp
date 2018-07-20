@@ -4,6 +4,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+    ofSetLogLevel(OF_LOG_VERBOSE);
+
     camWidth = 1920;
     camHeight = 1200;
     numChannels = 3;

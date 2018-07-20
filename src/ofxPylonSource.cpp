@@ -25,7 +25,7 @@ void PylonSource::start(int camWidth, int camHeight, int camChannels, const char
 	if (success) {
 		camera->RegisterImageEventHandler(this, RegistrationMode_ReplaceAll, Cleanup_None);
 		camera->Open();
-		ofLogNotice("Will load camera settings from node file", ofToString(nodeFile));
+		ofLogVerbose("Will load camera settings from node file", ofToString(nodeFile));
 		CFeaturePersistence::Load(nodeFile, &camera->GetNodeMap(), true);
 		camera->StartGrabbing(GrabStrategy_LatestImageOnly, GrabLoop_ProvidedByInstantCamera);
 		running = true;
@@ -38,12 +38,12 @@ void PylonSource::start(int camWidth, int camHeight, int camChannels, const char
 bool PylonSource::initializeCamera() {
 	try {
 		camera = new CBaslerUsbInstantCamera(CTlFactory::GetInstance().CreateFirstDevice());
-		cout << "Using device " << camera->GetDeviceInfo().GetModelName() << endl;
+		ofLogVerbose("Using device", camera->GetDeviceInfo().GetModelName());
 
 		return true;
 	}
 	catch (const GenericException & e) {
-		cerr << "PylonSource::initializeCamera: " << e.GetDescription() << endl;
+		ofLogError("PylonSource::initializeCamera", e.GetDescription());
 		return false;
 	}
 }
@@ -60,7 +60,10 @@ void PylonSource::OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& p
 		//memcpy(frameData, ptrGrabResult->GetBuffer(), bufferSize);
 		newFrame = true;
 	} else {
-		cerr << "PylonSource::OnImageGrabbed: " << ptrGrabResult->GetErrorCode() << " " << ptrGrabResult->GetErrorDescription() << endl;
+		stringstream ss;
+		ss << "PylonSource::OnImageGrabbed" << ofToString(ptrGrabResult->GetErrorCode());
+		ss << " " << ptrGrabResult->GetErrorDescription();
+		ofLogError(ss.str());
 	}
 
 }
