@@ -24,7 +24,7 @@ public:
 	PylonSource();
 	~PylonSource();
 
-	void start(int camWidth, int camHeight, int camChannels, string featureFile);
+	void start(string featureFile);
 
 	bool hasNewFrame() {
 		return newFrame;
@@ -40,8 +40,9 @@ public:
 	}
 
 protected:
+	void setupBuffer(int width, int height, int channels);
 
-	//void	OnOpened(CBaslerUsbInstantCamera& camera);
+	void	OnOpened(CBaslerUsbInstantCamera& camera);
 	void	OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult);
 	bool	initializeCamera();
 	//bool	registerEvents();
